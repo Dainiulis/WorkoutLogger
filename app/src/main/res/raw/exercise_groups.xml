@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<exerciseGroups>
+    <exerciseGroup>
+        <groupId>1</groupId>
+        <groupName>Push</groupName>
+    </exerciseGroup>
+    <exerciseGroup>
+        <groupId>2</groupId>
+        <groupName>Pull</groupName>
+    </exerciseGroup>
+    <exerciseGroup>
+        <groupId>3</groupId>
+        <groupName>Legs</groupName>
+    </exerciseGroup>
+    <exerciseGroup>
+        <groupId>4</groupId>
+        <groupName>Bridges</groupName>
+    </exerciseGroup>
+    <exerciseGroup>
+        <groupId>5</groupId>
+        <groupName>HandStand</groupName>
+    </exerciseGroup>
+    <exerciseGroup>
+        <groupId>6</groupId>
+        <groupName>Core</groupName>
+    </exerciseGroup>
+    <exerciseGroup>
+        <groupId>7</groupId>
+        <groupName>Extras</groupName>
+    </exerciseGroup>
+</exerciseGroups>

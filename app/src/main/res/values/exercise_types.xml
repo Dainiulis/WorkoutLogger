@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="training_type">
+        <item>Sets/Reps</item>
+        <item>Sets/Time</item>
+    </string-array>
+</resources>

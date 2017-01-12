@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.dainavahood.workoutlogger.workouts.WorkoutLOGActivity">
+    <item
+        android:id="@+id/action_add_sec"
+        android:orderInCategory="100"
+        android:title="Add sec"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_skip"
+        android:orderInCategory="101"
+        android:title="@string/skip"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_insert"
+        android:orderInCategory="102"
+        android:title="@string/insert"/>
+    <item
+        android:id="@+id/action_change_current"
+        android:orderInCategory="103"
+        android:title="@string/change_current" />
+    <item
+        android:id="@+id/action_add_next"
+        android:orderInCategory="104"
+        android:title="@string/add_next" />
+
+    <!--Atidedu balso atpazinima, nera labai reikalingas-->
+    <!--<item-->
+        <!--android:id="@+id/action_speech_recognition"-->
+        <!--android:orderInCategory="105"-->
+        <!--android:title="Speech"-->
+        <!--app:showAsAction="ifRoom"/>-->
+</menu>

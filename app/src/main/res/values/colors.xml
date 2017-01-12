@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="accent">#009688</color>
+    <color name="selected_item">#92bfbf</color>
+    <color name="start">#1fd6c5</color>
+    <color name="stop">#d61f25</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="add_set">#67c0de</color>
+    <color name="save_button">#93c9f5</color>
+    <color name="update_button">#f1df93</color>
+    <color name="no_need_update_button">#e1e0e0</color>
+    <color name="popup_background">#4f21f3</color>
+    <color name="search_view">#dadada</color>
+</resources>

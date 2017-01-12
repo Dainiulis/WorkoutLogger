@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customSetsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_weight="1"
+    android:background="@drawable/selected_items">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customSetsLayoutTextSize"
+        android:id="@+id/orderNr1"
+        android:layout_weight="10" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customSetsLayoutTextSize"
+        android:id="@+id/exerciseName1"
+        android:layout_weight="40" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customSetsLayoutTextSize"
+        android:id="@+id/reps1"
+        android:layout_weight="15" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customSetsLayoutTextSize"
+        android:id="@+id/weight1"
+        android:layout_weight="20" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/customSetsLayoutTextSize"
+        android:id="@+id/rest1"
+        android:layout_weight="15" />
+
+</LinearLayout>

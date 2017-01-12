@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.dainavahood.workoutlogger.workouts.CreateSetGroupActivity"
+    tools:showIn="@layout/activity_create_set_group"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/setGroupName"
+            android:hint="@string/enter_set_group_name"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:imeOptions="flagNoExtractUi"
+            android:singleLine="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/editName"
+            android:layout_toStartOf="@+id/editName"/>
+        <Button
+            android:id="@+id/editName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/setGroupName"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/divider">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nr"
+            android:textSize="@dimen/customSetsLayoutTextSize2"
+            android:layout_weight="10" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/exercise"
+            android:textSize="@dimen/customSetsLayoutTextSize2"
+            android:layout_weight="40" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/reps"
+            android:textSize="@dimen/customSetsLayoutTextSize2"
+            android:layout_weight="15" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/weight"
+            android:textSize="@dimen/customSetsLayoutTextSize2"
+            android:layout_weight="20" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rest_noSec"
+            android:textSize="@dimen/customSetsLayoutTextSize2"
+            android:layout_weight="15" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/setGroupExercisesListView"
+        android:dividerHeight="4dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/addExerciseButton"
+            android:text="@string/add_exercise"
+            android:background="@drawable/add_set_button_shape"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/secondary_text"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveSetGroup"
+            android:text="@string/save_set_group_button"
+            android:layout_weight="1"
+            android:background="@drawable/save_workout_button_shape"
+            android:textColor="@color/secondary_text"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

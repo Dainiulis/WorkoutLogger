@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".workouts.WorkoutLOGActivity"
+    tools:showIn="@layout/activity_workout_log"
+    android:id="@+id/workoutLogLayout"
+    android:keepScreenOn="true">
+
+    <TextView
+        android:id="@+id/exerciseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:text="aaaa"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/exerciseName"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none"
+        android:id="@+id/scrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/repsName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/reps_weight_rest_margin_top"
+                android:layout_toLeftOf="@+id/minus1"
+                android:layout_toStartOf="@+id/minus1"
+                android:layout_alignBaseline="@+id/editReps"
+                android:text="@string/reps"
+                android:textSize="@dimen/reps_weight_rest_text_size" />
+
+            <Button
+                android:id="@+id/minus1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editReps"
+                android:layout_toLeftOf="@+id/editReps"
+                android:layout_toStartOf="@id/editReps"
+                android:background="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editReps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_centerHorizontal="true"
+                android:ems="3"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text="0" />
+
+
+            <Button
+                android:id="@+id/plus1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editReps"
+                android:layout_toEndOf="@+id/editReps"
+                android:layout_toRightOf="@id/editReps"
+                android:background="@drawable/ic_plus" />
+
+            <Button
+                android:id="@+id/startTime"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editReps"
+                android:background="@drawable/start_pause_time_button_shape"
+                android:layout_toEndOf="@+id/plus1"
+                android:text="@string/start"
+                android:layout_toRightOf="@id/plus1"/>
+
+            <!--*****************************************************************-->
+
+            <TextView
+                android:id="@+id/weightName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/reps_weight_rest_margin_top"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/minus2"
+                android:layout_toStartOf="@id/minus2"
+                android:layout_alignBaseline="@+id/editWeight"
+                android:text="@string/weight"
+                android:textSize="@dimen/reps_weight_rest_text_size" />
+
+            <Button
+                android:id="@+id/minus2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editWeight"
+                android:layout_toLeftOf="@id/editWeight"
+                android:layout_toStartOf="@id/editWeight"
+                android:background="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_below="@+id/editReps"
+                android:layout_centerHorizontal="true"
+                android:ems="3"
+                android:imeOptions="flagNoExtractUi"
+                android:numeric="integer|decimal"
+                android:singleLine="true"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/plus2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editWeight"
+                android:layout_toEndOf="@+id/editWeight"
+                android:layout_toRightOf="@id/editWeight"
+                android:background="@drawable/ic_plus" />
+
+            <!--***********************************************************************-->
+
+            <TextView
+                android:id="@+id/restName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/reps_weight_rest_margin_top"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/minus3"
+                android:layout_toStartOf="@id/minus3"
+                android:layout_alignBaseline="@+id/editRest"
+                android:text="@string/rest_noSec"
+                android:textSize="@dimen/reps_weight_rest_text_size" />
+
+            <Button
+                android:id="@+id/minus3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editRest"
+                android:layout_toLeftOf="@id/editRest"
+                android:layout_toStartOf="@id/editRest"
+                android:background="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editRest"
+                android:textAlignment="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editWeight"
+                android:layout_centerHorizontal="true"
+                android:ems="3"
+                android:imeOptions="flagNoExtractUi"
+                android:numeric="integer|decimal"
+                android:singleLine="true"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/plus3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editRest"
+                android:layout_toEndOf="@+id/editRest"
+                android:layout_toRightOf="@id/editRest"
+                android:background="@drawable/ic_plus" />
+
+            <Button
+                android:id="@+id/startPause"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editRest"
+                android:layout_toEndOf="@+id/plus3"
+                android:layout_toRightOf="@id/plus3"
+                android:background="@drawable/ic_action_starttime" />
+
+            <!--*******************************************************************-->
+
+            <EditText
+                android:id="@+id/editNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editRest"
+                android:hint="@string/notes"
+                android:imeOptions="flagNoExtractUi" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editNotes"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/reps_weight_rest_margin_top"
+                android:id="@+id/buttonsLayout"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/go_back"
+                    android:textColor="@color/secondary_text"
+                    android:background="@drawable/back_button_shape"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/saveSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/save_log_button_shape"
+                    android:textColor="@color/secondary_text"
+                    android:layout_weight="1"
+                    android:text="@string/save" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/nextExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/buttonsLayout"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/previousExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/nextExercise"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp"/>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

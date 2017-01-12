@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<exercises>
+    <exercise>
+        <exerciseId>1</exerciseId>
+        <exerciseName>Push up</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Push</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>2</exerciseId>
+        <exerciseName>Push up hold</exerciseName>
+        <exerciseType>Sets/Time</exerciseType>
+        <exerciseGroup>Push</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>3</exerciseId>
+        <exerciseName>Kneeling push up</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Push</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>4</exerciseId>
+        <exerciseName>Pull up</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Pull</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>5</exerciseId>
+        <exerciseName>Pull up hold</exerciseName>
+        <exerciseType>Sets/Time</exerciseType>
+        <exerciseGroup>Pull</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>6</exerciseId>
+        <exerciseName>Row</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Pull</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>7</exerciseId>
+        <exerciseName>Squat</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Legs</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>8</exerciseId>
+        <exerciseName>Close squat</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Legs</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>9</exerciseId>
+        <exerciseName>Pistol squat</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Legs</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>10</exerciseId>
+        <exerciseName>Half bridge</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Bridges</exerciseGroup>
+    </exercise>
+    <exercise>
+        <exerciseId>11</exerciseId>
+        <exerciseName>Straight bridge</exerciseName>
+        <exerciseType>Sets/Reps</exerciseType>
+        <exerciseGroup>Bridges</exerciseGroup>
+    </exercise>
+</exercises>

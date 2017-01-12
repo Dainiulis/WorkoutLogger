@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dainavahood.workoutlogger">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".workouts.WorkoutsActivity"
+            android:label="@string/title_activity_workouts"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dainavahood.workoutlogger.MainActivity" />
+        </activity>
+        <activity
+            android:name=".workouts.CreateWorkoutActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_create_workout"
+            android:parentActivityName=".workouts.WorkoutsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".workouts.WorkoutsActivity" />
+        </activity>
+        <activity
+            android:name=".exercises.ExercisesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_exercises"
+            android:parentActivityName=".exercises.ExerciseGroupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".exercises.ExerciseGroupActivity" />
+        </activity>
+        <activity
+            android:name=".exercises.ExerciseGroupActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_muscle_group"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".exercises.CreateExerciseActivity"
+            android:label="@string/title_activity_create_exercise"
+            android:parentActivityName=".exercises.ExercisesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".exercises.ExercisesActivity" />
+        </activity>
+        <activity
+            android:name=".exercises.CreateExerciseGroupActivity"
+            android:label="@string/create_exercise_group"
+            android:parentActivityName=".exercises.ExerciseGroupActivity"
+            android:theme="@style/DialogCustomTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".exercises.ExerciseGroupActivity" />
+        </activity>
+        <activity
+            android:name=".workouts.CreateSetGroupActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_create_set_group"
+            android:parentActivityName=".workouts.CreateWorkoutActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dainavahood.workoutlogger.workouts.CreateWorkoutActivity" />
+        </activity>
+        <activity
+            android:name=".workouts.SetDetailsActivity"
+            android:label="@string/title_activity_set_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".workouts.WorkoutLOGActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_workout_log"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".history.WorkoutsHistoryList"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_workouts_history"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dainavahood.workoutlogger.MainActivity" />
+        </activity>
+        <activity
+            android:name=".history.WorkoutHistory"
+            android:label="@string/title_activity_workout_history"
+            android:parentActivityName=".history.WorkoutsHistoryList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dainavahood.workoutlogger.history.WorkoutsHistoryList" />
+        </activity>
+    </application>
+
+</manifest>

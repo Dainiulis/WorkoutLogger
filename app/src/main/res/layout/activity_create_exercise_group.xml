@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/setGroupName"
+        android:hint="@string/exercise_group_name_hint"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:imeOptions="flagNoExtractUi"
+        android:singleLine="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/saveButton2"
+        android:background="@drawable/save_button_shape"
+        android:layout_below="@+id/setGroupName"
+        android:layout_alignLeft="@+id/setGroupName"
+        android:layout_alignStart="@+id/setGroupName"
+        android:layout_alignRight="@+id/setGroupName"
+        android:layout_alignEnd="@+id/setGroupName"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="10dp" />
+</RelativeLayout>

@@ -93,7 +93,7 @@
             android:label="@string/title_activity_workout_log"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".history.WorkoutsHistoryList"
+            android:name=".history.WorkoutsHistoryListActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_workouts_history"
             android:parentActivityName=".MainActivity"
@@ -103,13 +103,13 @@
                 android:value="com.dainavahood.workoutlogger.MainActivity" />
         </activity>
         <activity
-            android:name=".history.WorkoutHistory"
+            android:name=".history.WorkoutHistoryActivity"
             android:label="@string/title_activity_workout_history"
-            android:parentActivityName=".history.WorkoutsHistoryList"
+            android:parentActivityName=".history.WorkoutsHistoryListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dainavahood.workoutlogger.history.WorkoutsHistoryList" />
+                android:value="com.dainavahood.workoutlogger.history.WorkoutsHistoryListActivity" />
         </activity>
     </application>
 

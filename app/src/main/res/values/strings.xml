@@ -61,4 +61,7 @@
     <string name="add_next">Add next</string>
     <string name="skip">Skip</string>
     <string name="insert">Insert</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home">Home</string>
 </resources>

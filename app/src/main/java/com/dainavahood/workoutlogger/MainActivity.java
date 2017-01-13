@@ -3,21 +3,23 @@ package com.dainavahood.workoutlogger;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Path;
-import android.graphics.drawable.BitmapDrawable;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.PathMotion;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +37,7 @@ import android.widget.Toast;
 import com.dainavahood.workoutlogger.db.DatabaseContract;
 import com.dainavahood.workoutlogger.db.WorkoutsDataSource;
 import com.dainavahood.workoutlogger.exercises.ExerciseGroupActivity;
-import com.dainavahood.workoutlogger.history.WorkoutsHistoryList;
+import com.dainavahood.workoutlogger.history.WorkoutsHistoryListActivity;
 import com.dainavahood.workoutlogger.workouts.WorkoutsActivity;
 
 import java.io.File;
@@ -45,13 +47,15 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private PopupWindow popupWindow;
     private LayoutInflater layoutInflater;
     private RelativeLayout mainLayout;
     private CoordinatorLayout coordinatorLayout;
     private String selectedBackup;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
 
     private static final int PERMISSIONS_REQUEST_W_STORAGE = 11;
     private static final int PERMISSIONS_REQUEST_R_STORAGE = 12;
@@ -69,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
         workoutsDataSource.open();
         mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(this);
 
     }
 
@@ -153,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 android.R.id.text1, files);
+
         Spinner elv = (Spinner) container2.findViewById(R.id.backupSpinner);
         elv.setAdapter(adapter);
 
@@ -178,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveBackUp() {
-        layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         final ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.save_backup, null);
         popupWindow = new PopupWindow(container, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
@@ -196,22 +211,6 @@ public class MainActivity extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
-    }
-
-    //  Atidaro workout activity
-    public void workoutsClickHandler(View view) {
-        Intent intent = new Intent(this, WorkoutsActivity.class);
-        startActivity(intent);
-    }
-
-    public void historyClickHandler(View view) {
-        Intent intent = new Intent(this, WorkoutsHistoryList.class);
-        startActivity(intent);
-    }
-
-    public void exercisesClickHandler(View view) {
-        Intent intent = new Intent(this, ExerciseGroupActivity.class);
-        startActivity(intent);
     }
 
     public void saveDatabase(String dbName) {
@@ -259,6 +258,57 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {}
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.nav_workouts:
+                Intent intent1 = new Intent(this, WorkoutsActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+
+            case R.id.nav_history:
+                Intent intent2 = new Intent(this, WorkoutsHistoryListActivity.class);
+                startActivity(intent2);
+                finish();
+                break;
+
+            case R.id.nav_exercises:
+                Intent intent3 = new Intent(this, ExerciseGroupActivity.class);
+                startActivity(intent3);
+                finish();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
     @Override

@@ -3,9 +3,15 @@ package com.dainavahood.workoutlogger.exercises;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
@@ -20,21 +26,24 @@ import android.widget.ListView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
+import com.dainavahood.workoutlogger.MainActivity;
 import com.dainavahood.workoutlogger.R;
 import com.dainavahood.workoutlogger.extras.Constants;
 import com.dainavahood.workoutlogger.db.ExerciseGroupDataSource;
 import com.dainavahood.workoutlogger.db.ExercisesDataSource;
 import com.dainavahood.workoutlogger.extras.ExerciseGroupXMLPullParser;
 import com.dainavahood.workoutlogger.extras.ExercisesXMLPullParser;
+import com.dainavahood.workoutlogger.history.WorkoutsHistoryListActivity;
 import com.dainavahood.workoutlogger.model.Exercise;
 import com.dainavahood.workoutlogger.workouts.CreateSetGroupActivity;
 import com.dainavahood.workoutlogger.workouts.SetDetailsActivity;
 import com.dainavahood.workoutlogger.workouts.WorkoutLOGActivity;
+import com.dainavahood.workoutlogger.workouts.WorkoutsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExerciseGroupActivity extends AppCompatActivity {
+public class ExerciseGroupActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     public static final String MUSCLE_GROUP = "MUSCLE_GROUP";
 
@@ -53,6 +62,9 @@ public class ExerciseGroupActivity extends AppCompatActivity {
     private String filteredText;
     private List<String> selectedExercisesGroups = new ArrayList<>();
     private ActionMode actionMode;
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
 
 
     @Override
@@ -79,59 +91,45 @@ public class ExerciseGroupActivity extends AppCompatActivity {
         refreshListView();
 
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        itemClickInit();
+
+        multiChoiceInit();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-//              Patikrinu is kurio activity ateinu ir kokio tipo arrayadapter objektai ir pagal tai atlieku atitinkamus veiksmus!!!!!!!!!
-                if (
-                        parent.getItemAtPosition(position).getClass().equals(Exercise.class) &&
-                                getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY ||
-                        parent.getItemAtPosition(position).getClass().equals(Exercise.class) &&
-                                getIntent().getIntExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, 0) == Constants.WORKOUT_LOG_ACTIVITY
-                        ) {
-                    Exercise exercise = (Exercise) parent.getItemAtPosition(position);
-                    Intent intent = new Intent(ExerciseGroupActivity.this, SetDetailsActivity.class);
-                    if (getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY) {
-                        intent.putExtra(CreateSetGroupActivity.CALLING_ACTIVITY, Constants.CREATE_SET_GROUP_ACTIVITY);
-                    } else {
-                        intent.putExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, Constants.WORKOUT_LOG_ACTIVITY);
-                    }
-                    intent.putExtra(Constants.EXERCISE_PACKAGE_NAME, exercise);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-                    startActivity(intent);
-                    finish();
-
-                } else if (
-                        parent.getItemAtPosition(position).getClass().equals(String.class) &&
-                                getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY ||
-                        parent.getItemAtPosition(position).getClass().equals(String.class) &&
-                                getIntent().getIntExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, 0) == Constants.WORKOUT_LOG_ACTIVITY
-                        ) {
-                    String muscleGroup = (String) parent.getItemAtPosition(position);
-
-                    Intent intent = new Intent(ExerciseGroupActivity.this, ExercisesActivity.class);
-                    if (getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY) {
-                        intent.putExtra(CreateSetGroupActivity.CALLING_ACTIVITY, Constants.CREATE_SET_GROUP_ACTIVITY);
-                    } else {
-                        intent.putExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, Constants.WORKOUT_LOG_ACTIVITY);
-                    }
-                    intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-                    intent.putExtra(MUSCLE_GROUP, muscleGroup);
-                    startActivity(intent);
-                    finish();
-
-                } else if (parent.getItemAtPosition(position).getClass().equals(String.class)) {
-
-                    Intent intent = new Intent(ExerciseGroupActivity.this, ExercisesActivity.class);
-                    String muscleGroup = (String) parent.getItemAtPosition(position);
-                    intent.putExtra(MUSCLE_GROUP, muscleGroup);
-                    startActivity(intent);
-
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent(ExerciseGroupActivity.this, CreateExerciseGroupActivity.class);
+                startActivityForResult(intent, DETAIL_REQUEST);
             }
         });
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+        if ( getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY ||
+                getIntent().getIntExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, 0) == Constants.WORKOUT_LOG_ACTIVITY ) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.setDrawerIndicatorEnabled(false);
+            toolbar.setNavigationIcon(R.drawable.ic_action_back_stock);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExerciseGroupActivity.super.onBackPressed();
+                }
+            });
+        }
+
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(3).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    private void multiChoiceInit() {
         lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         lv.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
@@ -209,17 +207,61 @@ public class ExerciseGroupActivity extends AppCompatActivity {
                 adapter1.getFilter().filter(filteredText);
             }
         });
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    private void itemClickInit() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ExerciseGroupActivity.this, CreateExerciseGroupActivity.class);
-                startActivityForResult(intent, DETAIL_REQUEST);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+//              Patikrinu is kurio activity ateinu ir kokio tipo arrayadapter objektai ir pagal tai atlieku atitinkamus veiksmus!!!!!!!!!
+                if (
+                        parent.getItemAtPosition(position).getClass().equals(Exercise.class) &&
+                                getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY ||
+                        parent.getItemAtPosition(position).getClass().equals(Exercise.class) &&
+                                getIntent().getIntExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, 0) == Constants.WORKOUT_LOG_ACTIVITY
+                        ) {
+                    Exercise exercise = (Exercise) parent.getItemAtPosition(position);
+                    Intent intent = new Intent(ExerciseGroupActivity.this, SetDetailsActivity.class);
+                    if (getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY) {
+                        intent.putExtra(CreateSetGroupActivity.CALLING_ACTIVITY, Constants.CREATE_SET_GROUP_ACTIVITY);
+                    } else {
+                        intent.putExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, Constants.WORKOUT_LOG_ACTIVITY);
+                    }
+                    intent.putExtra(Constants.EXERCISE_PACKAGE_NAME, exercise);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                    startActivity(intent);
+                    finish();
+
+                } else if (
+                        parent.getItemAtPosition(position).getClass().equals(String.class) &&
+                                getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY ||
+                        parent.getItemAtPosition(position).getClass().equals(String.class) &&
+                                getIntent().getIntExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, 0) == Constants.WORKOUT_LOG_ACTIVITY
+                        ) {
+                    String muscleGroup = (String) parent.getItemAtPosition(position);
+
+                    Intent intent = new Intent(ExerciseGroupActivity.this, ExercisesActivity.class);
+                    if (getIntent().getIntExtra(CreateSetGroupActivity.CALLING_ACTIVITY, 0) == Constants.CREATE_SET_GROUP_ACTIVITY) {
+                        intent.putExtra(CreateSetGroupActivity.CALLING_ACTIVITY, Constants.CREATE_SET_GROUP_ACTIVITY);
+                    } else {
+                        intent.putExtra(WorkoutLOGActivity.WORKOUT_LOG_CALLING_ACTIVITY, Constants.WORKOUT_LOG_ACTIVITY);
+                    }
+                    intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                    intent.putExtra(MUSCLE_GROUP, muscleGroup);
+                    startActivity(intent);
+//                    finish();
+
+                } else if (parent.getItemAtPosition(position).getClass().equals(String.class)) {
+
+                    Intent intent = new Intent(ExerciseGroupActivity.this, ExercisesActivity.class);
+                    String muscleGroup = (String) parent.getItemAtPosition(position);
+                    intent.putExtra(MUSCLE_GROUP, muscleGroup);
+                    startActivity(intent);
+
+                }
             }
         });
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @NonNull
@@ -275,10 +317,62 @@ public class ExerciseGroupActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Toast.makeText(this, "alsjhdljashd", Toast.LENGTH_SHORT).show();
+                super.onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.nav_home:
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+
+            case R.id.nav_history:
+                Intent intent2 = new Intent(this, WorkoutsHistoryListActivity.class);
+                startActivity(intent2);
+                finish();
+                break;
+
+            case R.id.nav_workouts:
+                Intent intent3 = new Intent(this, WorkoutsActivity.class);
+                startActivity(intent3);
+                finish();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
     @Override

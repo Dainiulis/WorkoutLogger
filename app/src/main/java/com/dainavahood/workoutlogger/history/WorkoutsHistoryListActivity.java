@@ -4,7 +4,13 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,14 +21,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.dainavahood.workoutlogger.MainActivity;
 import com.dainavahood.workoutlogger.R;
 import com.dainavahood.workoutlogger.db.WorkoutsDataSource;
+import com.dainavahood.workoutlogger.exercises.ExerciseGroupActivity;
 import com.dainavahood.workoutlogger.extras.Constants;
 import com.dainavahood.workoutlogger.extras.CustomWorkoutsHistoryLayoutAdapter;
 import com.dainavahood.workoutlogger.extras.DateDialog;
 import com.dainavahood.workoutlogger.model.Workout;
+import com.dainavahood.workoutlogger.workouts.WorkoutsActivity;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -31,7 +39,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class WorkoutsHistoryList extends AppCompatActivity {
+public class WorkoutsHistoryListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private WorkoutsDataSource dataSource;
     private List<Workout> workouts;
@@ -45,6 +53,9 @@ public class WorkoutsHistoryList extends AppCompatActivity {
     private String firstDay, lastDay;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar calendar = Calendar.getInstance();
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +97,7 @@ public class WorkoutsHistoryList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Workout clickedWorkout = (Workout) parent.getItemAtPosition(position);
-                Intent intent = new Intent(WorkoutsHistoryList.this, WorkoutHistory.class);
+                Intent intent = new Intent(WorkoutsHistoryListActivity.this, WorkoutHistoryActivity.class);
                 intent.putExtra(Constants.WORKOUT_PACKAGE_NAME, clickedWorkout);
                 startActivity(intent);
             }
@@ -98,7 +109,7 @@ public class WorkoutsHistoryList extends AppCompatActivity {
 
                 final Workout deleteWorkout = (Workout) parent.getItemAtPosition(position);
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(WorkoutsHistoryList.this);
+                AlertDialog.Builder alert = new AlertDialog.Builder(WorkoutsHistoryListActivity.this);
                 alert.setTitle("Delete this workout history");
                 alert.setMessage("Do you want to delete this workout history?");
 
@@ -125,7 +136,16 @@ public class WorkoutsHistoryList extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(2).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     private ListView refreshListView() {
@@ -212,6 +232,57 @@ public class WorkoutsHistoryList extends AppCompatActivity {
         Timestamp timestamp = new Timestamp(unixSeconds);
         String formattedDate = sdf.format(timestamp);
         return formattedDate;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.nav_home:
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+
+            case R.id.nav_workouts:
+                Intent intent2 = new Intent(this, WorkoutsActivity.class);
+                startActivity(intent2);
+                finish();
+                break;
+
+            case R.id.nav_exercises:
+                Intent intent3 = new Intent(this, ExerciseGroupActivity.class);
+                startActivity(intent3);
+                finish();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
     @Override

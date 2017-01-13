@@ -3,9 +3,15 @@ package com.dainavahood.workoutlogger.exercises;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
@@ -18,13 +24,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.dainavahood.workoutlogger.MainActivity;
 import com.dainavahood.workoutlogger.R;
 import com.dainavahood.workoutlogger.extras.Constants;
 import com.dainavahood.workoutlogger.db.ExercisesDataSource;
+import com.dainavahood.workoutlogger.history.WorkoutsHistoryListActivity;
 import com.dainavahood.workoutlogger.model.Exercise;
 import com.dainavahood.workoutlogger.workouts.CreateSetGroupActivity;
 import com.dainavahood.workoutlogger.workouts.SetDetailsActivity;
 import com.dainavahood.workoutlogger.workouts.WorkoutLOGActivity;
+import com.dainavahood.workoutlogger.workouts.WorkoutsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +168,7 @@ public class ExercisesActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @NonNull

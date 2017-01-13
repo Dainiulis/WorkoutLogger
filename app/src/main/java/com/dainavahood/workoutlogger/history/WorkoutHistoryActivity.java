@@ -20,7 +20,7 @@ import com.dainavahood.workoutlogger.model.Workout;
 
 import java.util.List;
 
-public class WorkoutHistory extends AppCompatActivity {
+public class WorkoutHistoryActivity extends AppCompatActivity {
 
     private WorkoutsDataSource dataSource;
     private Bundle bundle;

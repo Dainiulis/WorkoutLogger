@@ -167,7 +167,7 @@ public class ExercisesActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

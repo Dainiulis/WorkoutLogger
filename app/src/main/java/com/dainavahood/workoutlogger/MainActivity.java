@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.dainavahood.workoutlogger.db.DatabaseContract;
 import com.dainavahood.workoutlogger.db.WorkoutsDataSource;
 import com.dainavahood.workoutlogger.exercises.ExerciseGroupActivity;
+import com.dainavahood.workoutlogger.extras.ExitAppDialog;
 import com.dainavahood.workoutlogger.history.WorkoutsHistoryListActivity;
 import com.dainavahood.workoutlogger.workouts.WorkoutsActivity;
 
@@ -265,7 +266,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            ExitAppDialog exitAppDialog = new ExitAppDialog(this);
+            exitAppDialog.show();
         }
     }
 

@@ -113,10 +113,6 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        Atidedu balso atpazinima, nera reikalingas siuo metu
-//        sr = SpeechRecognizer.createSpeechRecognizer(this);
-//        sr.setRecognitionListener(new SpeechListener());
-
         loadActivity();
 
     }
@@ -507,8 +503,6 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
             });
         }
 
-
-//        super.onBackPressed();
     }
 
     private void startCountDownTimer() {
@@ -654,11 +648,6 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
                 precountMillis += 5000;
                 Toast.makeText(WorkoutLOGActivity.this, "Precount time = " + precountMillis/1000 + "sec", Toast.LENGTH_SHORT).show();
                 return true;
-
-//        Atidedu balso atpazinima, nera reikalingas siuo metu
-//            case R.id.action_speech_recognition:
-//                return true;
-//        Atidedu balso atpazinima, nera reikalingas siuo metu
         }
 
         return super.onOptionsItemSelected(item);
@@ -698,99 +687,5 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
             }
         }
     }
-
-    //        Atidedu balso atpazinima, nera reikalingas siuo metu
-//    private void startSpeechListening() {
-//        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-//        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-US");
-//        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "voice.recognition.test");
-//
-//        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
-//        sr.startListening(intent);
-//        Log.i("111111", "1111111");
-//    }
-
-//    class SpeechListener implements RecognitionListener {
-//
-//        public void onReadyForSpeech(Bundle params)
-//        {
-//            Log.d(TAG, "onReadyForSpeech");
-//        }
-//        public void onBeginningOfSpeech()
-//        {
-//            Log.d(TAG, "onBeginningOfSpeech");
-//        }
-//        public void onRmsChanged(float rmsdB)
-//        {
-//            Log.d(TAG, "onRmsChanged");
-//        }
-//        public void onBufferReceived(byte[] buffer)
-//        {
-//            Log.d(TAG, "onBufferReceived: " + buffer);
-//        }
-//        public void onEndOfSpeech()
-//        {
-//            Log.d(TAG, "onEndofSpeech");
-//        }
-//        public void onError(int error)
-//        {
-//            if (error == 9) {
-//                if (ContextCompat.checkSelfPermission(WorkoutLOGActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(WorkoutLOGActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSION_REQUEST_RECORD_AUDIO);
-//                }
-//            }
-//            if (error == 7) {
-//                sr.cancel();
-//                startSpeechListening();
-//            }
-//            Log.d(TAG,  "error " +  error);
-//        }
-//        public void onResults(Bundle results)
-//        {
-//            String str = new String();
-//            Log.d(TAG, "onResults " + results);
-//            ArrayList data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-//            for (int i = 0; i < data.size(); i++)
-//            {
-//                Soundex soundex = new Soundex();
-//                String phVL1 = "start";
-//                String myVal = data.get(i).toString();
-//                StringMetric metric = StringMetrics.jaroWinkler();
-//                float difference = metric.compare(soundex.encode(phVL1), soundex.encode(myVal));
-//                if (difference >= 0.9) {
-//                    Log.d(TAG, "result " + data.get(i));
-//                    Log.d(TAG, "Difference " + difference);
-//                }
-////                if (phVL1.equals(myVal)) {
-////                    str += data.get(i);
-////                }
-//            }
-////            Toast.makeText(WorkoutLOGActivity.this, "results: " + String.valueOf(data.size()), Toast.LENGTH_SHORT).show();
-//            Toast.makeText(WorkoutLOGActivity.this, str, Toast.LENGTH_SHORT).show();
-//        }
-//        public void onPartialResults(Bundle partialResults)
-//        {
-//            Log.d(TAG, "onPartialResults");
-//        }
-//        public void onEvent(int eventType, Bundle params)
-//        {
-//            Log.d(TAG, "onEvent " + eventType);
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (requestCode == PERMISSION_REQUEST_RECORD_AUDIO) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                sr.cancel();
-//                startSpeechListening();
-//            } else {
-//                Toast.makeText(this, "Permission to record audio not granted", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-    //        Atidedu balso atpazinima, nera reikalingas siuo metu
 
 }

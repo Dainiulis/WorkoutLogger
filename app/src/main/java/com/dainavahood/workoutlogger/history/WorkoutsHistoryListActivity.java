@@ -29,6 +29,7 @@ import com.dainavahood.workoutlogger.exercises.ExerciseGroupActivity;
 import com.dainavahood.workoutlogger.extras.Constants;
 import com.dainavahood.workoutlogger.extras.CustomWorkoutsHistoryLayoutAdapter;
 import com.dainavahood.workoutlogger.extras.DateDialog;
+import com.dainavahood.workoutlogger.extras.ExitAppDialog;
 import com.dainavahood.workoutlogger.model.Workout;
 import com.dainavahood.workoutlogger.workouts.WorkoutsActivity;
 
@@ -239,7 +240,8 @@ public class WorkoutsHistoryListActivity extends AppCompatActivity implements Na
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            ExitAppDialog exitAppDialog = new ExitAppDialog(this);
+            exitAppDialog.show();
         }
     }
 

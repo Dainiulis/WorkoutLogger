@@ -33,6 +33,7 @@ import com.dainavahood.workoutlogger.db.ExerciseGroupDataSource;
 import com.dainavahood.workoutlogger.db.ExercisesDataSource;
 import com.dainavahood.workoutlogger.extras.ExerciseGroupXMLPullParser;
 import com.dainavahood.workoutlogger.extras.ExercisesXMLPullParser;
+import com.dainavahood.workoutlogger.extras.ExitAppDialog;
 import com.dainavahood.workoutlogger.history.WorkoutsHistoryListActivity;
 import com.dainavahood.workoutlogger.model.Exercise;
 import com.dainavahood.workoutlogger.workouts.CreateSetGroupActivity;
@@ -250,7 +251,7 @@ public class ExerciseGroupActivity extends AppCompatActivity implements Navigati
                     intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                     intent.putExtra(MUSCLE_GROUP, muscleGroup);
                     startActivity(intent);
-//                    finish();
+                    finish();
 
                 } else if (parent.getItemAtPosition(position).getClass().equals(String.class)) {
 
@@ -315,12 +316,6 @@ public class ExerciseGroupActivity extends AppCompatActivity implements Navigati
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Toast.makeText(this, "alsjhdljashd", Toast.LENGTH_SHORT).show();
-                super.onBackPressed();
-                return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -330,6 +325,8 @@ public class ExerciseGroupActivity extends AppCompatActivity implements Navigati
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+//            ExitAppDialog exitAppDialog = new ExitAppDialog(this);
+//            exitAppDialog.show();
         }
     }
 

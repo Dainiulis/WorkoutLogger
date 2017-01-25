@@ -172,18 +172,21 @@ public class WorkoutsActivity extends AppCompatActivity implements NavigationVie
                 Intent intent1 = new Intent(this, MainActivity.class);
                 startActivity(intent1);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_history:
                 Intent intent2 = new Intent(this, WorkoutsHistoryListActivity.class);
                 startActivity(intent2);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_exercises:
                 Intent intent3 = new Intent(this, ExerciseGroupActivity.class);
                 startActivity(intent3);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
         }
 

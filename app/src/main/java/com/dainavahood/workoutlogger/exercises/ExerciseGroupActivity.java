@@ -352,18 +352,21 @@ public class ExerciseGroupActivity extends AppCompatActivity implements Navigati
                 Intent intent1 = new Intent(this, MainActivity.class);
                 startActivity(intent1);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_history:
                 Intent intent2 = new Intent(this, WorkoutsHistoryListActivity.class);
                 startActivity(intent2);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_workouts:
                 Intent intent3 = new Intent(this, WorkoutsActivity.class);
                 startActivity(intent3);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
         }
 

@@ -267,18 +267,21 @@ public class WorkoutsHistoryListActivity extends AppCompatActivity implements Na
                 Intent intent1 = new Intent(this, MainActivity.class);
                 startActivity(intent1);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_workouts:
                 Intent intent2 = new Intent(this, WorkoutsActivity.class);
                 startActivity(intent2);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_exercises:
                 Intent intent3 = new Intent(this, ExerciseGroupActivity.class);
                 startActivity(intent3);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
         }
 

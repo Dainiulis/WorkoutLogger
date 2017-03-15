@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dainavahood.workoutlogger.GlobalVariables;
 import com.dainavahood.workoutlogger.R;
 import com.dainavahood.workoutlogger.db.WorkoutsDataSource;
 import com.dainavahood.workoutlogger.exercises.ExerciseGroupActivity;
@@ -58,6 +60,7 @@ import org.simmetrics.metrics.StringMetrics;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -101,6 +104,8 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
     private CoordinatorLayout coordinatorLayout;
     private Snackbar snackbar;
     private int precountMillis = 5000;
+    private long startingTime;
+    private GlobalVariables appContext;
 
     private static final int PERMISSION_REQUEST_RECORD_AUDIO = 10;
     private static final String TAG = "TAGAS";
@@ -112,6 +117,8 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_workout_log);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        appContext = (GlobalVariables) getApplicationContext();
 
         loadActivity();
 
@@ -132,11 +139,15 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
         }
         if (getIntent().getIntExtra(CreateWorkoutActivity.CREATE_WORKOUT_CALLING_ACTIVITY, 0) == Constants.CREATE_WORKOUT_ACTIVITY) {
             if (!reloading) {
+                startingTime = System.currentTimeMillis();
                 sets = new ArrayList<>();
                 setGroups = dataSource.findAllSetGroups(workout.getId());
                 for (SetGroup setGroup : setGroups) {
                     sets.addAll(setGroup.getSets());
                 }
+
+                appContext.setStartTime(System.currentTimeMillis());
+
                 exerciseOBJ = 0;
                 setsToSave = new ArrayList<>();
                 previousWorkout = dataSource.getPreviousWorkout(workout);
@@ -148,6 +159,8 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
         } else {
             exerciseOBJ = getIntent().getIntExtra(EXERCISE_OBJ, 0);
             setsToSave = getIntent().getParcelableArrayListExtra(SAVED_SETS);
+
+            Toast.makeText(this, "Elapsed time " + getElapsedTime(), Toast.LENGTH_LONG).show();
 
             if (!reloading) {
                 sets = getIntent().getParcelableArrayListExtra(ALL_SETS);
@@ -434,6 +447,14 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private String getElapsedTime() {
+        long startTime = appContext.getStartTime();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        long sec = (elapsedTime / 1000) % 60;
+        long min = (elapsedTime / 60000);
+        return String.format("%02d:%02d", min, sec);
+    }
+
     private void addToSetsToSave() {
         if (!countRestTime) {
             restToSave = getInt(editRestEt.getText().toString());
@@ -445,6 +466,11 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
         set.setRest(restToSave);
         set.setTime(sets.get(exerciseOBJ).isTime());
         set.setNotes(editNotesEt.getText().toString());
+        if (exerciseOBJ == sets.size()-1) {
+            String currentNotesInput = set.getNotes();
+            set.setNotes(currentNotesInput + "\nFinished in " + getElapsedTime());
+            Toast.makeText(this, "Finished workout in " + getElapsedTime(), Toast.LENGTH_LONG).show();
+        }
         set.setSetGroupId(sets.get(exerciseOBJ).getSetGroupId());
         set.setOrderNr(sets.get(exerciseOBJ).getOrderNr());
         setsToSave.add(set);

@@ -24,11 +24,11 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:imeOptions="flagNoExtractUi"
-            android:singleLine="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/editName"
-            android:layout_toStartOf="@+id/editName"/>
+            android:layout_toStartOf="@+id/editName"
+            android:maxLines="1" />
         <Button
             android:id="@+id/editName"
             android:layout_width="wrap_content"

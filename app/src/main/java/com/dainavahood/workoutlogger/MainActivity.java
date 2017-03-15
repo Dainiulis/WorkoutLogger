@@ -46,7 +46,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -137,7 +139,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.action_load_backup:
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_R_STORAGE);
                 } else {
                     loadBackUp();
@@ -202,11 +205,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+        final EditText et = (EditText) container.findViewById(R.id.backupName);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(new Date());
+        et.setText(date);
         Button button = (Button) container.findViewById(R.id.saveButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText et = (EditText) container.findViewById(R.id.backupName);
                 String backupName = et.getText().toString();
                 saveDatabase(backupName + ".db");
                 Toast.makeText(MainActivity.this, "Database " + backupName + " saved successfully", Toast.LENGTH_SHORT).show();

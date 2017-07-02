@@ -18,41 +18,59 @@ import java.util.List;
 public class CustomSetsLayoutAdapter extends ArrayAdapter {
 
     private static final long INVALID_ID = -1;
-    private final Context context;
     private final List<Set> sets;
-    private View rowView;
 
     public CustomSetsLayoutAdapter(Context context, List<Set> sets) {
         super(context, R.layout.custom_set_group_list_layout, sets);
-        this.context = context;
         this.sets = sets;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        rowView = inflater.inflate(R.layout.custom_set_group_list_layout, parent, false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            rowView.setBackground(context.getResources().getDrawable(R.drawable.selected_items));
+        final ViewHoler viewHoler;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_set_group_list_layout, parent, false);
+            viewHoler = new ViewHoler(convertView);
+            convertView.setTag(viewHoler);
         } else {
-            rowView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.selected_items));
+            viewHoler = (ViewHoler) convertView.getTag();
         }
 
-        TextView orderNr = (TextView) rowView.findViewById(R.id.orderNr);
-        TextView exerciseName = (TextView) rowView.findViewById(R.id.exerciseName);
-        TextView reps = (TextView) rowView.findViewById(R.id.reps);
-        TextView weight = (TextView) rowView.findViewById(R.id.weight);
-        TextView rest = (TextView) rowView.findViewById(R.id.rest);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            viewHoler.view.setBackground(getContext().getResources().getDrawable(R.drawable.selected_items));
+        } else {
+            viewHoler.view.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.selected_items));
+        }
 
-        orderNr.setText(String.valueOf(sets.get(position).getOrderNr() + 1));
-        exerciseName.setText(sets.get(position).getExerciseName());
-        reps.setText(String.valueOf(sets.get(position).getReps()));
-        weight.setText(String.valueOf(sets.get(position).getWeight()));
-        rest.setText(String.valueOf(sets.get(position).getRest()));
+        viewHoler.orderNr.setText(String.valueOf(sets.get(position).getOrderNr() + 1));
+        viewHoler.exerciseName.setText(sets.get(position).getExerciseName());
+        viewHoler.reps.setText(String.valueOf(sets.get(position).getReps()));
+        viewHoler.weight.setText(String.valueOf(sets.get(position).getWeight()));
+        viewHoler.rest.setText(String.valueOf(sets.get(position).getRest()));
 
-        return rowView;
+        return convertView;
 
+    }
+
+    private static class ViewHoler {
+        private View view;
+        private TextView
+                orderNr,
+                exerciseName,
+                reps,
+                weight,
+                rest;
+
+        private ViewHoler(View view) {
+            this.view = view;
+            this.orderNr = (TextView) view.findViewById(R.id.orderNr);
+            this.exerciseName = (TextView) view.findViewById(R.id.exerciseName);
+            this.reps = (TextView) view.findViewById(R.id.reps);
+            this.weight = (TextView) view.findViewById(R.id.weight);
+            this.rest = (TextView) view.findViewById(R.id.rest);
+        }
     }
 
 }

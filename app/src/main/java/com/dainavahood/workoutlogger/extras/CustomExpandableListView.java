@@ -62,25 +62,24 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
+        GroupViewHolder viewHolder;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_set_group_history_list, parent, false);
+            viewHolder = new GroupViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (GroupViewHolder) convertView.getTag();
         }
-
-        TextView exerciseName = (TextView) convertView.findViewById(R.id.exerciseName1);
-        TextView orderNr = (TextView) convertView.findViewById(R.id.orderNr1);
-        TextView reps = (TextView) convertView.findViewById(R.id.reps1);
-        TextView weight = (TextView) convertView.findViewById(R.id.weight1);
-        TextView rest = (TextView) convertView.findViewById(R.id.rest1);
 
         Set set = (Set) getGroup(groupPosition);
 
-        exerciseName.setText(set.getExerciseName());
-        orderNr.setText(String.valueOf(set.getOrderNr()+1));
-        reps.setText(String.valueOf(set.getReps()));
-        weight.setText(String.valueOf(set.getWeight()));
-        rest.setText(String.valueOf(set.getRest()));
+        viewHolder.exerciseName.setText(set.getExerciseName());
+        viewHolder.orderNr.setText(String.valueOf(set.getOrderNr() + 1));
+        viewHolder.reps.setText(String.valueOf(set.getReps()));
+        viewHolder.weight.setText(String.valueOf(set.getWeight()));
+        viewHolder.rest.setText(String.valueOf(set.getRest()));
 
         return convertView;
     }
@@ -88,16 +87,20 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
+        ChildViewHolder viewHolder;
+
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_set_group_history_list_child, parent, false);
+            viewHolder = new ChildViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ChildViewHolder) convertView.getTag();
         }
-
-        TextView tvNote = (TextView) convertView.findViewById(R.id.notes);
 
         String noteText = (String) getChild(groupPosition, childPosition);
 
-        tvNote.setText(noteText);
+        viewHolder.tvNote.setText(noteText);
 
         return convertView;
     }
@@ -105,5 +108,33 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    private static class GroupViewHolder {
+        private View view;
+        private TextView
+                exerciseName,
+                orderNr,
+                reps,
+                weight,
+                rest;
+        private GroupViewHolder(View view) {
+            this.view = view;
+            exerciseName = (TextView) view.findViewById(R.id.exerciseName1);
+            orderNr = (TextView) view.findViewById(R.id.orderNr1);
+            reps = (TextView) view.findViewById(R.id.reps1);
+            weight = (TextView) view.findViewById(R.id.weight1);
+            rest = (TextView) view.findViewById(R.id.rest1);
+        }
+    }
+
+    private static class ChildViewHolder {
+        private View view;
+        private TextView tvNote;
+
+        private ChildViewHolder(View view) {
+            this.view = view;
+            tvNote = (TextView) view.findViewById(R.id.notes);
+        }
     }
 }

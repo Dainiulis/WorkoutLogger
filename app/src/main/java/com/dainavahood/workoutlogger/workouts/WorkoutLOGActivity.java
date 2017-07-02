@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -611,15 +613,28 @@ public class WorkoutLOGActivity extends AppCompatActivity implements View.OnClic
 
     private void playSound(int soundRaw) {
 
+        Uri soundURI = Uri.parse(Constants.URI_TO_PACKAGE + soundRaw);
+        MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
+        metadataRetriever.setDataSource(this, soundURI);
+        long soundDuration = Long.parseLong(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
         nBuilder.setSmallIcon(R.drawable.ic_minus)
                 .setContentTitle("Notification")
                 .setContentText("Pranesimas")
                 .setVibrate(new long[] {200, 700, 200, 700})
-                .setSound(Uri.parse(Constants.URI_TO_PACKAGE + soundRaw));
+                .setSound(soundURI);
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_WOUT_LOG, nBuilder.build());
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                notificationManager.cancel(Constants.NOTIFICATION_WOUT_LOG);
+            }
+        };
+        Handler handler = new Handler();
+        handler.postDelayed(r, soundDuration);
     }
 
     private void cancelAllTimers() {

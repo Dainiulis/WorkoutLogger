@@ -1,5 +1,6 @@
 package com.dainavahood.workoutlogger.extras;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,35 +20,49 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.dainavahood.workoutlogger.R.id.workoutDate;
+import static com.dainavahood.workoutlogger.R.id.workoutName;
+
 public class CustomWorkoutsHistoryLayoutAdapter extends ArrayAdapter implements Filterable {
 
-    private final Context context;
     private List<Workout> workouts;
-    private List<Workout> originalWorkouts;
-//    private static int layout = R.layout.custom_workout_history_list;
 
     public CustomWorkoutsHistoryLayoutAdapter(Context context, List<Workout> workouts) {
         super(context, R.layout.custom_workout_history_list, workouts);
-        this.context = context;
         this.workouts = workouts;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.custom_workout_history_list, parent, false);
 
-        TextView workoutName = (TextView) rowView.findViewById(R.id.workoutName);
-        TextView workoutDate = (TextView) rowView.findViewById(R.id.workoutDate);
+        ViewHolder viewHolder;
 
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_workout_history_list, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
-        workoutName.setText(workouts.get(position).getName());
+        viewHolder.workoutName.setText(workouts.get(position).getName());
 
         long unixSeconds = workouts.get(position).getDate();
         String formattedDate = getDate(unixSeconds);
-        workoutDate.setText(formattedDate);
+        viewHolder.workoutDate.setText(formattedDate);
 
-        return rowView;
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        private View view;
+        private TextView workoutName, workoutDate;
+
+        private ViewHolder(View view) {
+            this.view = view;
+            this.workoutName = (TextView) view.findViewById(R.id.workoutName);
+            this.workoutDate = (TextView) view.findViewById(R.id.workoutDate);
+        }
     }
 
     private String getDate(long unixSeconds) {

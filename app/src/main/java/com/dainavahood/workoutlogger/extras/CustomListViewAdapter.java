@@ -17,7 +17,6 @@ import java.util.List;
 
 public class CustomListViewAdapter extends ArrayAdapter{
 
-    private final Activity context;
     private final List<SetGroup> setGroups;
     private List<Set> sets;
     private int count;
@@ -25,31 +24,35 @@ public class CustomListViewAdapter extends ArrayAdapter{
     public CustomListViewAdapter(Activity context, List<SetGroup> setGroups) {
         super(context, R.layout.custom_list_view, setGroups);
 
-        this.context = context;
         this.setGroups = setGroups;
     }
 
-    public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.custom_list_view, null, true);
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-        TableLayout table = (TableLayout) rowView.findViewById(R.id.table);
+        ViewHolder viewHolder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_list_view, null, true);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         int orderNr = setGroups.get(position).getOrderNr();
 
-        TextView tv = (TextView) rowView.findViewById(R.id.setGroupName);
-        tv.setText(orderNr+1 + ") " + setGroups.get(position).getName());
+        viewHolder.tv.setText(orderNr+1 + ") " + setGroups.get(position).getName());
 
         sets = setGroups.get(position).getSets();
         count = 0;
         for (Set set: sets) {
-            TableRow row = new TableRow(context);
+            TableRow row = new TableRow(getContext());
             row.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT
             ));
             if (count%2!=0) {
-                row.setBackgroundColor(context.getResources().getColor(R.color.divider));
+                row.setBackgroundColor(getContext().getResources().getColor(R.color.divider));
             }
 
             row.setId(100 + count);
@@ -59,18 +62,29 @@ public class CustomListViewAdapter extends ArrayAdapter{
             row = addColumn(String.valueOf(set.getWeight()), row, 203+count);
             row = addColumn(String.valueOf(set.getRest()), row, 204+count);
 
-            table.addView(row, new TableLayout.LayoutParams(
+            viewHolder.table.addView(row, new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.WRAP_CONTENT));
             count++;
 
         }
 
-        return rowView;
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        private View view;
+        private TextView tv;
+        private TableLayout table;
+        private ViewHolder(View view) {
+            this.view = view;
+            tv = (TextView) view.findViewById(R.id.setGroupName);
+            table = (TableLayout) view.findViewById(R.id.table);
+        }
     }
 
     private TableRow addColumn(String columnValue, TableRow row, int idPrefix){
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getContext());
         tv.setId(idPrefix);
         tv.setText(columnValue);
         tv.setPadding(2, 2, 2, 2);
